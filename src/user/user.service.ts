@@ -1,17 +1,31 @@
+import { InjectQueue } from '@nestjs/bull';
 import { Injectable } from '@nestjs/common';
-import { uploadToS3 } from 'src/utils/s3.utils';
+import { Queue } from 'bull';
+import { UploadImageContent } from 'src/__common/interfaces/interface';
 
 @Injectable()
 export class UserService {
+  constructor(@InjectQueue('imageUpload') private readonly imageUpload: Queue) {}
   async uploadFile(file) {
-    console.log({ file });
     const { originalname } = file;
 
-    return await uploadToS3(
-      file.buffer,
-      process.env.S3_BUCKET,
-      originalname,
-      file.mimetype,
-    );
+    const content: UploadImageContent = {
+      file: file.buffer,
+      name: originalname,
+      bucket: process.env.S3_BUCKET,
+      mimetype: file.mimetype,
+    }
+
+    await this.imageUpload.add('upload-image', content, {
+      delay: 3000,
+      preventParsingData: true,
+      attempts: 5,
+      backoff: {
+        type: 'exponential',
+        delay: 3000,
+      },
+    });
+
+    return { message: "Success!" }
   }
 }

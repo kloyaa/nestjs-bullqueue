@@ -16,4 +16,10 @@ export class UserController {
   uploadFile(@UploadedFile() file: Express.Multer.File) {
     return this.userService.uploadFile(file);
   }
+
+
+  @Post('/test')
+  test() {
+    return this.userService.uploadFile(null);
+  }
 }

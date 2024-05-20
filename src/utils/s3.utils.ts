@@ -11,12 +11,10 @@ function S3Config() {
 
 export async function uploadToS3(file, bucket, name, mimetype) {
   const s3 = S3Config();
-
   const params = {
     Bucket: bucket,
     Key: String(name),
     Body: file,
-    ACL: 'public-read',
     ContentType: mimetype,
     ContentDisposition: 'inline',
     CreateBucketConfiguration: {

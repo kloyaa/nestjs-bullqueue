@@ -21,10 +21,17 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@bull-board/api": "^5.17.1",
+    "@bull-board/express": "^5.17.1",
+    "@bull-board/nestjs": "^5.17.1",
+    "@nestjs/bull": "^10.1.1",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
     "aws-sdk": "^2.1535.0",
+    "bull": "^4.12.6",
+    "dotenv": "^16.4.5",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
